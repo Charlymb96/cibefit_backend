@@ -1,0 +1,45 @@
+package com.cibefit.backend
+
+import com.cibefit.backend.security.JwtAuthenticationFilter
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig(
+    private val jwtFilter: JwtAuthenticationFilter
+) {
+
+    @Bean
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .csrf { it.disable() } // Asegúrate de que esto esté así
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .authorizeHttpRequests { auth ->
+                auth.requestMatchers("/api/auth/**").permitAll()
+                auth.anyRequest().authenticated() // <-- Esto obliga a tener un JWT válido para todo lo demás
+            }
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+
+        return http.build()
+    }
+
+    @Bean
+    fun passwordEncoder(): PasswordEncoder {
+        return BCryptPasswordEncoder() // Indispensable para encriptar contraseñas
+    }
+
+    @Bean
+    fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
+        return config.authenticationManager // Necesario para gestionar el login
+    }
+}
