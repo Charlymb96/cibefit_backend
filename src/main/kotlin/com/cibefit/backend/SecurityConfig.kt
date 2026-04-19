@@ -22,11 +22,11 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { it.disable() } // Asegúrate de que esto esté así
+            .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth.requestMatchers("/api/auth/**").permitAll()
-                auth.anyRequest().authenticated() // <-- Esto obliga a tener un JWT válido para todo lo demás
+                auth.anyRequest().authenticated()
             }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
 
@@ -35,11 +35,11 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder() // Indispensable para encriptar contraseñas
+        return BCryptPasswordEncoder()
     }
 
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
-        return config.authenticationManager // Necesario para gestionar el login
+        return config.authenticationManager
     }
 }

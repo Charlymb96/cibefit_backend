@@ -10,5 +10,5 @@ data class GrupoMuscular(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val nombre: String = "" // <-- Añade este "= """ para que tenga un valor por defecto
+    val nombre: String = ""
 )

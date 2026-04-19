@@ -11,12 +11,12 @@ data class RutinaEjercicio(
 
     @ManyToOne
     @JoinColumn(name = "id_rutina")
-    var rutina: Rutina? = null, // Cambiado a var y nullable con valor por defecto
+    var rutina: Rutina? = null,
 
     @ManyToOne
     @JoinColumn(name = "id_ejercicio")
-    var ejercicio: Ejercicio? = null, // Cambiado a var y nullable con valor por defecto
+    var ejercicio: Ejercicio? = null,
 
     @Column(nullable = false)
-    var orden: Int = 0 // Cambiado a var con valor por defecto
+    var orden: Int = 0
 )

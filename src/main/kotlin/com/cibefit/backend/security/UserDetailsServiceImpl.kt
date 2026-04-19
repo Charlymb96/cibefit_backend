@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service
 class UserDetailsServiceImpl(private val repository: UsuarioRepository) : UserDetailsService {
 
     override fun loadUserByUsername(email: String): UserDetails {
-        // Buscamos al usuario en tu base de datos
+
         val usuario = repository.findByEmail(email)
             ?: throw UsernameNotFoundException("Usuario no encontrado con email: $email")
 
-        // Retornamos el formato que Spring Security entiende
+
         return User.builder()
             .username(usuario.email)
-            .password(usuario.password) // ¡IMPORTANTE: Aquí debe ir la contraseña encriptada!
+            .password(usuario.password)
             .roles(usuario.rol.name)
             .build()
     }

@@ -15,7 +15,7 @@ data class Rutina(
 
     @ManyToOne
     @JoinColumn(name = "id_creador")
-    @JsonIgnoreProperties("rutinas") // <--- Esto evita que el JSON entre en bucle infinito
+    @JsonIgnoreProperties("rutinas")
     val creador: Usuario? = null,
 
     @Column(name = "es_publica")

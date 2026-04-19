@@ -11,7 +11,7 @@ import javax.crypto.SecretKey
 @Component
 class JwtTokenProvider {
 
-    // La clave debe tener al menos 32 caracteres (256 bits) para HS256
+
     private val key: SecretKey = Keys.hmacShaKeyFor("esta-clave-debe-ser-muy-larga-y-secreta-cibefit-2026-tfg".toByteArray())
 
     fun generateToken(authentication: Authentication): String {

@@ -32,6 +32,6 @@ data class Usuario(
     var rol: RolUsuario = RolUsuario.USER,
 
     @OneToMany(mappedBy = "creador", cascade = [CascadeType.ALL])
-    @JsonIgnoreProperties("creador") // Esto evita el bucle infinito al convertir a JSON
+    @JsonIgnoreProperties("creador")
     var rutinas: MutableList<Rutina> = mutableListOf()
 )
