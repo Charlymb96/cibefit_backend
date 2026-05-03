@@ -3,7 +3,6 @@ package com.cibefit.backend.models
 import jakarta.persistence.*
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-// 1. Definimos el Enum primero o después de la clase
 enum class RolUsuario {
     USER, ADMIN
 }
@@ -35,3 +34,4 @@ data class Usuario(
     @JsonIgnoreProperties("creador")
     var rutinas: MutableList<Rutina> = mutableListOf()
 )
+
